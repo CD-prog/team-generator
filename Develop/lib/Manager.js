@@ -12,6 +12,3 @@ class Manager extends Employee {
     }
 }
 module.exports = Manager;
-
-// manager = new Manager('Mike',0,'manager@manager.com',3124058776 )
-// manager.getOfficeNumber()

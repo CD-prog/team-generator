@@ -13,5 +13,3 @@ class Intern extends Employee {
 }
 module.exports = Intern;
 
-// const intern = new Intern('Michel',2,'michael@michael.com','northwestern')
-// intern.getSchool()

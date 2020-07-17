@@ -37,28 +37,34 @@ inquirer
             message: "email:",
             name: "email"
         },
-        
+
     ])
-    .then(function (response) {
+    .then(response => {
+        if (response.role === "Intern") {
+            inquirer
+                .prompt({
+                    type: "input",
+                    message: "School:",
+                    name: "school"
+                })
+        } else if (response.role === "Engineer") {
+            inquirer
+                .prompt({
+                    type: "input",
+                    message: "GitHub:",
+                    name: "github"
+                })
+        } else if (response.role === "Manager") {
+            inquirer
+                .prompt({
+                    type: "input",
+                    message: "Office Number:",
+                    name: "officeNumber"
+                })
+        }
+    })
 
-        inquirer
-        .prompt ([ {
-            type: "input",
-            message: "School:",
-            name: "school"
-        },
-        {
-            type: "input",
-            message: "GitHub profile:",
-            name: "github",
-        },
-        {
-            type: "input",
-            message: "Office Number:",
-            name: "officeNumber",
-        },
 
-        ])
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will

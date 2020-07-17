@@ -19,6 +19,3 @@ class Employee {
 }
 module.exports = Employee
 
-// const employee = new Employee('John',1,'john@john.com')
-// employee.getEmail()
-// console.log(employee)
