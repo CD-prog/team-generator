@@ -10,10 +10,13 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const employees = [];
+
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-inquirer
+const  addEmployee  = () => { 
+    inquirer
     .prompt([
         {
             type: "list",
@@ -39,29 +42,52 @@ inquirer
 
     ])
     .then(response => {
-        if (response.role === "Intern") {
-            inquirer
-                .prompt({
-                    type: "input",
-                    message: "School:",
-                    name: "school"
-                })
-        } else if (response.role === "Engineer") {
-            inquirer
-                .prompt({
-                    type: "input",
-                    message: "GitHub:",
-                    name: "github"
-                })
-        } else if (response.role === "Manager") {
-            inquirer
-                .prompt({
-                    type: "input",
-                    message: "Office Number:",
-                    name: "officeNumber"
-                })
+        var names = {
+            Intern:"School:",
+            Engineer: "GitHub:",
+            Manager: "Office Number:"
         }
+        inquirer
+                .prompt({
+                    type: "input",
+                    message: names[response.role],
+                    name: "misc"
+                }).then(res=>{
+                    var constructors = {
+                        Intern:Intern,
+                        Engineer: Engineer,
+                        Manager: Manager
+                    }
+                    const Factory = constructors[response.role];
+                    var newEmployee = new Factory(response.name, response.id, response.email, res.misc)
+                    employees.push(newEmployee);
+                    return;
+                    //Figure out what type of emplpoyee AKA intern etc
+                    //Instantiate new object AKA new Intern(some args go here);
+                    //add that to some array of employees we store somewhere
+                })
+                .then(() => {
+                    inquirer
+                .prompt({
+                    type: "confirm",
+                    message: "Continue? ",
+                    name: "continue"
+                }).then(response=>{
+                    if(response.continue){
+                        addEmployee();
+                    }else{
+                       var html = render(employees);
+                       fs.writeFile(outputPath, html, (err) => {
+                        if (err) throw err;
+                    
+                        console.log("The file was successfully saved!");
+                    });
+                    }
+                })
+                })
     })
+}
+addEmployee();
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
@@ -73,12 +99,4 @@ inquirer
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
 
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
 
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
