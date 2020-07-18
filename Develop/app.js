@@ -62,9 +62,6 @@ const  addEmployee  = () => {
                     var newEmployee = new Factory(response.name, response.id, response.email, res.misc)
                     employees.push(newEmployee);
                     return;
-                    //Figure out what type of emplpoyee AKA intern etc
-                    //Instantiate new object AKA new Intern(some args go here);
-                    //add that to some array of employees we store somewhere
                 })
                 .then(() => {
                     inquirer
@@ -79,7 +76,6 @@ const  addEmployee  = () => {
                        var html = render(employees);
                        fs.writeFile(outputPath, html, (err) => {
                         if (err) throw err;
-                    
                         console.log("The file was successfully saved!");
                     });
                     }
@@ -88,15 +84,5 @@ const  addEmployee  = () => {
     })
 }
 addEmployee();
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated div(s) for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
 
 
